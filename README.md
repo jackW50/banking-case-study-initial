@@ -2,6 +2,8 @@
 * John Werenski 2000581
 * Finished the REST services for deposit, credtcard, and autoloan
 * Did not have a real chance to get in the orchestrator section yet. Just set up some files and that was about it.
+
+*-------------------------------
 You're going to create a banking application.  The banking application has the following lines of business (LoBs):
 
 * Deposit Accounts
