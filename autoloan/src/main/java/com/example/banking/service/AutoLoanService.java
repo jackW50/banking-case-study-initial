@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 @Service
 public class AutoLoanService {
 
@@ -16,7 +19,6 @@ public class AutoLoanService {
     }
 
     public AutoLoan saveLoan(AutoLoan loan) {
-        System.out.println(loan.getName());
         try {
             if(loan.getName() == null || loan.getName() == "") {
                     return new AutoLoan.InnerAutoLoanBuilder()
@@ -27,6 +29,7 @@ public class AutoLoanService {
                             .addMessage("Cannot save account at this time").build();
             }
             return this.autoLoanRepository.save(loan);
+
         } catch (Exception e) {
             return new AutoLoan.InnerAutoLoanBuilder()
                     .addId(null)
@@ -36,5 +39,49 @@ public class AutoLoanService {
                     .addMessage("Cannot save account at this time").build();
         }
 
+    }
+
+    public List<AutoLoan> getAccountsByClientId(Long clientId) {
+
+        return this.autoLoanRepository.findAllByClientId(clientId);
+    }
+
+    public List<AutoLoan> allLoans() {
+
+        return (List) this.autoLoanRepository.findAll();
+    }
+
+    public AutoLoan updateClient(AutoLoan loan, Long loanId) {
+        Optional<AutoLoan> currentLoan = this.autoLoanRepository.findById(loanId);
+
+        if(currentLoan.isPresent()) {
+            return this.autoLoanRepository.save(new AutoLoan.InnerAutoLoanBuilder()
+                    .addId(currentLoan.get().getId())
+                    .addClientId(loan.getClientId())
+                    .addName(loan.getName())
+                    .addBalance(currentLoan.get().getBalance())
+                    .build());
+        }
+
+        return new AutoLoan.InnerAutoLoanBuilder()
+                .addId(null)
+                .addClientId(null)
+                .addName(null)
+                .addBalance(null)
+                .addMessage("Cannot update loan at this time").build();
+
+
+    }
+
+    public Boolean deleteAccount(Long id) {
+        Boolean success = true;
+
+        try {
+            this.autoLoanRepository.deleteById(id);
+        } catch (Exception e) {
+            success = false;
+        }
+
+        return success;
     }
 }
