@@ -21,17 +21,18 @@ public class AutoLoanService {
     public AutoLoan saveLoan(AutoLoan loan) {
         try {
             if(loan.getName() == null || loan.getName() == "") {
-                    return new AutoLoan.InnerAutoLoanBuilder()
+                    return AutoLoan.builder()
                             .addId(null)
                             .addClientId(null)
                             .addName(null)
                             .addBalance(null)
                             .addMessage("Cannot save account at this time").build();
+
             }
             return this.autoLoanRepository.save(loan);
 
         } catch (Exception e) {
-            return new AutoLoan.InnerAutoLoanBuilder()
+            return AutoLoan.builder()
                     .addId(null)
                     .addClientId(null)
                     .addName(null)
@@ -55,7 +56,7 @@ public class AutoLoanService {
         Optional<AutoLoan> currentLoan = this.autoLoanRepository.findById(loanId);
 
         if(currentLoan.isPresent()) {
-            return this.autoLoanRepository.save(new AutoLoan.InnerAutoLoanBuilder()
+            return this.autoLoanRepository.save(AutoLoan.builder()
                     .addId(currentLoan.get().getId())
                     .addClientId(loan.getClientId())
                     .addName(loan.getName())
@@ -63,7 +64,7 @@ public class AutoLoanService {
                     .build());
         }
 
-        return new AutoLoan.InnerAutoLoanBuilder()
+        return AutoLoan.builder()
                 .addId(null)
                 .addClientId(null)
                 .addName(null)
