@@ -57,6 +57,7 @@ public class CreditCardService {
                 .addId(null)
                 .addClientId(null)
                 .addName(null)
+                .addNumber(null)
                 .addBalance(null)
                 .addMessage("Cannot update loan at this time").build();
 

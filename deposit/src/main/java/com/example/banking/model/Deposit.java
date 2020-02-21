@@ -1,6 +1,8 @@
 package com.example.banking.model;
 
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+import javassist.runtime.Inner;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,24 +10,24 @@ import javax.persistence.Id;
 
 @Entity
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class CreditCard {
+public class Deposit {
 
     @Id
     @GeneratedValue
     Long id;
     Long clientId;
-    String number;
+    String accountNumber;
     String name;
     Double balance;
     String message;
 
-    public CreditCard() {
+    public Deposit() {
     }
 
-    public CreditCard(Long id, Long clientId, String number, String name, Double balance, String message) {
+    public Deposit(Long id, Long clientId, String accountNumber, String name, Double balance, String message) {
         this.id = id;
         this.clientId = clientId;
-        this.number = number;
+        this.accountNumber = accountNumber;
         this.name = name;
         this.balance = balance;
         this.message = message;
@@ -47,12 +49,12 @@ public class CreditCard {
         this.clientId = clientId;
     }
 
-    public String getNumber() {
-        return number;
+    public String getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setAccountNumber(String accountNumber) {
+        this.accountNumber = accountNumber;
     }
 
     public String getName() {
@@ -81,55 +83,57 @@ public class CreditCard {
 
     @Override
     public String toString() {
-        return "CreditCard{" +
+        return "Deposit{" +
                 "id=" + id +
                 ", clientId=" + clientId +
-                ", number='" + number + '\'' +
+                ", accountNumber='" + accountNumber + '\'' +
                 ", name='" + name + '\'' +
                 ", balance=" + balance +
                 ", message='" + message + '\'' +
                 '}';
     }
 
-    public static InnerCreditCardBuilder builder() { return new InnerCreditCardBuilder(); }
+    public static InnerDepositBuilder builder() { return new InnerDepositBuilder(); }
 
-    public static class InnerCreditCardBuilder {
-        CreditCard creditCard;
+    public static class InnerDepositBuilder {
 
-        public InnerCreditCardBuilder() { this.creditCard = new CreditCard(); }
+        Deposit deposit;
 
-        public InnerCreditCardBuilder addId(Long id) {
-            this.creditCard.id = id;
+        public InnerDepositBuilder() { this.deposit = new Deposit(); }
+
+        public InnerDepositBuilder addId(Long id) {
+            this.deposit.id = id;
             return this;
         }
 
-        public InnerCreditCardBuilder addClientId(Long clientId) {
-            this.creditCard.clientId = clientId;
+        public InnerDepositBuilder addClientId(Long clientId) {
+            this.deposit.clientId = clientId;
             return this;
         }
 
-        public InnerCreditCardBuilder addNumber(String number) {
-            this.creditCard.number = number;
+        public InnerDepositBuilder addAccountNumber(String accountNumber) {
+            this.deposit.accountNumber = accountNumber;
             return this;
         }
 
-        public InnerCreditCardBuilder addName(String name) {
-            this.creditCard.name = name;
+        public InnerDepositBuilder addName(String name) {
+            this.deposit.name = name;
             return this;
         }
 
-        public InnerCreditCardBuilder addBalance(Double balance) {
-            this.creditCard.balance = balance;
+        public InnerDepositBuilder addBalance(Double balance) {
+            this.deposit.balance = balance;
             return this;
         }
 
-        public InnerCreditCardBuilder addMessage(String message) {
-            this.creditCard.message = message;
+        public InnerDepositBuilder addMessage(String message) {
+            this.deposit.message = message;
             return this;
         }
 
-        public CreditCard build() {
-            return this.creditCard;
+        public Deposit build() {
+            return this.deposit;
         }
+
     }
 }
